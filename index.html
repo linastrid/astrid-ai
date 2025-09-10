@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astrid.AI</title>
+    <meta name="description" content="Meet Astrid.AI - Digital Portfolio Assistant">
+    <meta property="og:image" content="https://i.ibb.co/PGrvFYtP/profile-round.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/PGrvFYtP/profile-round.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #f5f5f5;
+            position: relative;
+        }
+
+        /* Mobile CTA button - hidden on desktop */
+        .info-btn {
+            display: none;
+            position: fixed;
+            top: 12px;
+            right: 16px;
+            z-index: 1002;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* 在手機上顯示 */
+        @media (max-width: 768px) {
+            .info-btn { display: inline-flex; align-items: center; gap: 8px; }
+        }
+
+
+        /* Mobile overlay */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .sidebar {
+            width: 400px;
+            background: #fafafa;
+            padding: 40px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            /* align-items: flex-start; */
+            height: 100vh;
+            overflow-y: auto;
+            transition: none; /* 預設 desktop 不要動畫 */
+        }
+
+        .sidebar h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .sidebar h3 {
+            font-size: 16px;
+        }
+
+        .description {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 36px;
+        }
+
+        .about-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .about-section h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bio {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 16px;
+        }
+
+        .linkedin-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #3b81f6;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .linkedin-link:hover {
+            text-decoration: underline;
+        }
+
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fafafa;
+            height: 100vh;
+        }
+
+        .chat-container {
+            flex: 1;
+            padding: 20px 20px 20px 0px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 40px);
+        }
+
+        .chatbot-wrapper {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            height: 100%;
+        }
+
+        .chatbot-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 1rem;
+            z-index: 10;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e5e5;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            body {
+                overflow: hidden; /* Keep hidden for mobile */
+            }
+
+            .container {
+                height: 100vh; /* Full viewport height */
+            }
+
+            /* Hide sidebar by default on mobile, show as overlay when active */
+            .sidebar {
+                position: fixed;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start; /* 保證從上方開始排 */
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                transform: translateY(100%);
+                transition: transform 0.3s ease-in-out; 
+                z-index: 1000;
+                background: #fafafa;
+                padding: 60px 30px 30px 30px; /* Extra top padding for close button */
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .sidebar.active {
+                transform: translateY(0);
+                
+            }
+
+            .mobile-overlay.active {
+                display: block;
+            }
+
+            .sidebar h1 {
+                font-size: 1.5rem;
+                margin-bottom: 16px;
+            }
+
+            .description {
+                margin-bottom: 24px;
+                font-size: 0.9rem;
+            }
+
+            .about-card {
+                margin-bottom: 20px;
+            }
+
+            .profile-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            /* Chat area takes full screen on mobile */
+            .chat-area {
+                width: 100%;
+                height: 100vh;
+            }
+
+            .chat-container { 
+                padding: 0; 
+                height: 100vh; /* 撐滿螢幕 */
+            }
+
+            .chatbot-wrapper {
+                position: fixed;
+                top: 12px;         /* 從螢幕上方留 10px */
+                left: 0;
+                width: 100vw;
+                height: calc(100vh - 12px); /* 扣掉上方 10px，仍然填滿螢幕 */
+                border-radius: 0;
+                box-shadow: none;
+                z-index: 1; /* 仍在按鈕下方 */
+            }
+
+            .chatbot-frame {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+        }
+
+        /* Tablet adjustments */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .sidebar {
+                width: 350px;
+                padding: 30px 25px;
+            }
+
+            .sidebar h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Ensure flowise chatbot takes full space */
+        flowise-fullchatbot {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- button (mobile only) -->
+        <button class="info-btn" id="infoBtn" aria-label="Know more about me">
+            Know more about me
+        </button>
+          
+
+        <!-- Mobile overlay -->
+        <div class="mobile-overlay" id="overlay"></div>
+
+        <div class="sidebar" id="sidebar">
+            <h1>👋 Meet Astrid.AI</h1>
+            <p class="description">
+                Discover Astrid.AI, your digital guide to my professional journey. This AI chatbot is designed to provide insights into my background, projects, and product thinking seamlessly. 
+                <br>Whether you're a recruiter, hiring manager, or just curious, feel free to explore my professional experiences.
+            </p>
+            
+            <div class="about-card">
+                <div class="about-section">
+                    <h2>About Me</h2>
+                    <div class="profile">
+                        <div class="profile-image">
+                          <img src="https://i.ibb.co/PGrvFYtP/profile-round.png" alt="Astrid Lin">
+                        </div>
+                        <div class="profile-info">
+                          <h3>Astrid Lin</h3>
+                          <div class="email">astrid.lin.work@gmail.com</div>
+                        </div>
+                      </div>                      
+                    <p class="bio">
+                        I’m a product manager passionate about AI and technology, with 5 years of experience driving innovative projects and shaping strategic product solutions.
+                    </p>
+                    <a href="https://www.linkedin.com/in/astrid-lin-profile/" target="_blank" class="linkedin-link">
+                        Check my LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-area">
+            <div class="chat-container">
+                <div class="chatbot-wrapper">
+                    <div class="loading-indicator" id="loading">
+                        <div class="spinner"></div>
+                        <span>Loading Astrid.AI...</span>
+                    </div>
+                    <iframe
+                        class="chatbot-frame"
+                        src="https://flowiseai-railway-production-b908.up.railway.app/chatbot/156b158e-e920-4bc7-80f7-6a9d12398e52"
+                        style="width:100%; height:100%; border:0; border-radius:8px;"
+                        loading="lazy"
+                        onload="document.getElementById('loading').style.display='none';"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const infoBtn = document.getElementById('infoBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+    
+        function toggleMenu() {
+            const isActive = sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // 改變按鈕文字
+            infoBtn.textContent = isActive ? 'Close' : 'Know more about me';
+        }
+    
+        function closeMenu() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            infoBtn.textContent = 'Know more about me'; // 關閉時恢復
+        }
+    
+        infoBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', closeMenu);
+    
+        const sidebarLinks = sidebar.querySelectorAll('a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => setTimeout(closeMenu, 300));
+        });
+    
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) closeMenu();
+        });
+    
+        sidebar.addEventListener('transitionend', () => {
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        });
+    </script>
+    
+
+</body>
+</html>
