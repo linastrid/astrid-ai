@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astrid.AI</title>
     <meta name="description" content="Meet Astrid.AI - Digital Portfolio Assistant">
-    <meta property="og:image" content="https://i.ibb.co/PGrvFYtP/profile-round.png">
-    <link rel="icon" type="image/png" href="https://i.ibb.co/PGrvFYtP/profile-round.png">
+    <meta property="og:image" content="https://i.ibb.co/sXR1xd7/og-image.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/PGrvFYtP/profile-round-mini.png">
     <style>
         * {
             margin: 0;
@@ -194,6 +194,14 @@
             display: block;
         }
 
+        .chat-warning {
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+            text-align: center;
+            display: block;
+        }
+
         .loading-indicator {
             position: absolute;
             top: 50%;
@@ -232,7 +240,7 @@
             }
 
             .container {
-                height: 100vh; /* Full viewport height */
+                height: 100dvh; /* Full viewport height */
             }
 
             /* Hide sidebar by default on mobile, show as overlay when active */
@@ -284,29 +292,43 @@
             /* Chat area takes full screen on mobile */
             .chat-area {
                 width: 100%;
-                height: 100vh;
+                height: 100dvh;
             }
 
             .chat-container { 
-                padding: 0; 
-                height: 100vh; /* 撐滿螢幕 */
+                padding: 12px 0 0 0; 
+                height: 100dvh; 
+                display: flex; 
+                flex-direction: column; 
+                min-height: 0; 
             }
 
             .chatbot-wrapper {
-                position: fixed;
-                top: 12px;         /* 從螢幕上方留 10px */
-                left: 0;
-                width: 100vw;
-                height: calc(100vh - 12px); /* 扣掉上方 10px，仍然填滿螢幕 */
+                position: static;        /* 取消 fixed */
+                top: auto; left: auto;
+                width: 100%;
+                height: auto;            /* 交給 flex */
+                flex: 1 1 auto;          /* 佔滿可用高度 */
                 border-radius: 0;
                 box-shadow: none;
-                z-index: 1; /* 仍在按鈕下方 */
+                z-index: auto;
             }
 
             .chatbot-frame {
                 width: 100%;
                 height: 100%;
                 border-radius: 0;
+            }
+
+            .chat-warning {
+                position: static;        /* 取消 fixed */
+                width: 100%;
+                margin-top: 0;           /* Remove margin for mobile */
+                padding: 8px 12px;
+                background: transparent; /* 要底色可自行加 */
+                z-index: auto;
+                pointer-events: auto;
+                text-align: center;
             }
         }
 
@@ -345,7 +367,7 @@
         <div class="sidebar" id="sidebar">
             <h1>👋 Meet Astrid.AI</h1>
             <p class="description">
-                Discover Astrid.AI, your digital guide to my professional journey. This AI chatbot is designed to provide insights into my background, projects, and product thinking seamlessly. 
+                Discover Astrid.AI, your digital guide to my professional journey. This RAG-based AI chatbot is designed to provide insights into my background, projects, and product thinking seamlessly. 
                 <br>Whether you're a recruiter, hiring manager, or just curious, feel free to explore my professional experiences.
             </p>
             
@@ -354,7 +376,7 @@
                     <h2>About Me</h2>
                     <div class="profile">
                         <div class="profile-image">
-                          <img src="https://i.ibb.co/PGrvFYtP/profile-round.png" alt="Astrid Lin">
+                          <img src="https://i.ibb.co/PGrvFYtP/profile-round-mini.png" alt="Astrid Lin">
                         </div>
                         <div class="profile-info">
                           <h3>Astrid Lin</h3>
@@ -385,6 +407,9 @@
                         loading="lazy"
                         onload="document.getElementById('loading').style.display='none';"
                     ></iframe>
+                </div>
+                <div class="chat-warning">
+                    Astrid.AI may make mistakes. Contact me with any questions.
                 </div>
             </div>
         </div>
