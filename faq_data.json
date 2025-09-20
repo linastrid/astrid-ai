@@ -3,12 +3,12 @@
   "description": "Common questions about Astrid's product management experience",
   "questions": [
     "Tell me about yourself",
-    "Have you done AI product implementation before?",
     "What are you currently working on?",
+    "Have you done AI product implementation before?",
     "Have you ever built a 0-to-1 product?",
-    "How do you persuade stakeholders?",
     "Have you used A/B testing in your work?",
-    "Give me a data-driven product decision you made?",
+    "Give me a data-driven product decision you made",
+    "How do you persuade stakeholders?",
     "What do teammates say about working with you?",
     "What are your strengths as a product manager?",
     "What are the most proud or impactful projects in your recent work?"
