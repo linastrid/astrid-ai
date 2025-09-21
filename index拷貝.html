@@ -5,8 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astrid.AI</title>
     <meta name="description" content="Meet Astrid.AI - Digital Portfolio Assistant">
-    <meta property="og:image" content="https://i.ibb.co/LXhcrJfb/thumbnail.png">
-    <link rel="icon" type="image/png" href="https://i.ibb.co/pv48bpdR/profile-mini.png">
+    <meta property="og:image" content="images/thumbnail_2.png">
+    <link rel="icon" type="image/png" href="images/profile-mini.png">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-28C4DZGQWJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-28C4DZGQWJ');
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -50,11 +60,10 @@
             color: #333;
         }
 
-        /* 在手機上顯示 */
+        /* åœ¨æ‰‹æ©Ÿä¸Šé¡¯ç¤º */
         @media (max-width: 768px) {
             .info-btn { display: inline-flex; align-items: center; gap: 8px; }
         }
-
 
         /* Mobile overlay */
         .mobile-overlay {
@@ -75,10 +84,9 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            /* align-items: flex-start; */
             height: 100vh;
             overflow-y: auto;
-            transition: none; /* 預設 desktop 不要動畫 */
+            transition: none;
         }
 
         .sidebar h1 {
@@ -96,7 +104,7 @@
             color: #666;
             font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: 36px;
+            margin-bottom: 16px;
         }
 
         .about-card {
@@ -161,6 +169,185 @@
             text-decoration: underline;
         }
 
+        /* FAQ link styling */
+        .faq-link {
+            display: inline-block;
+            margin-bottom: 32px;
+            color: #3b81f6;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .faq-link:hover {
+            text-decoration: underline;
+        }
+
+        /* FAQ Lightbox Styles */
+        .faq-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 100vh;
+            z-index: 10000;
+            background: transparent;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .faq-lightbox.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+
+        .faq-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            animation: slideInLeft 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .faq-header {
+            padding: 24px 28px 20px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .faq-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .faq-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .faq-close:hover {
+            background-color: #f0f0f0;
+        }
+
+        .faq-body {
+            padding: 12px 28px;
+            flex: 1;             
+            overflow-y: auto;
+        }
+
+        .faq-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .copy-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn.copied {
+            background: #48bb78;
+        }
+
+        /* FAQ Loading Styles */
+        .faq-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 40px 0;
+            color: #666;
+        }
+
+        .faq-loading .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #e5e5e5;
+            border-top: 2px solid #667eea;
+        }
+
+        .faq-error {
+            text-align: center;
+            padding: 40px 20px;
+            color: #e53e3e;
+        }
+
+        .faq-error button {
+            margin-top: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
         .chat-area {
             flex: 1;
             display: flex;
@@ -184,6 +371,7 @@
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             position: relative;
+            z-index: 1;
             height: 100%;
         }
 
@@ -192,6 +380,8 @@
             height: 100%;
             border: none;
             display: block;
+            position: relative; 
+            z-index: 1;
         }
 
         .chat-warning {
@@ -236,19 +426,18 @@
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             body {
-                overflow: hidden; /* Keep hidden for mobile */
+                overflow: hidden;
             }
 
             .container {
-                height: 100dvh; /* Full viewport height */
+                height: 100dvh;
             }
 
-            /* Hide sidebar by default on mobile, show as overlay when active */
             .sidebar {
                 position: fixed;
                 display: flex;
                 flex-direction: column;
-                justify-content: flex-start; /* 保證從上方開始排 */
+                justify-content: flex-start;
                 top: 0;
                 left: 0;
                 width: 100vw;
@@ -257,13 +446,12 @@
                 transition: transform 0.3s ease-in-out; 
                 z-index: 1000;
                 background: #fafafa;
-                padding: 60px 30px 30px 30px; /* Extra top padding for close button */
+                padding: 60px 30px 30px 30px;
                 box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
             }
 
             .sidebar.active {
                 transform: translateY(0);
-                
             }
 
             .mobile-overlay.active {
@@ -289,7 +477,6 @@
                 height: 60px;
             }
 
-            /* Chat area takes full screen on mobile */
             .chat-area {
                 width: 100%;
                 height: 100dvh;
@@ -304,11 +491,11 @@
             }
 
             .chatbot-wrapper {
-                position: static;        /* 取消 fixed */
+                position: static;
                 top: auto; left: auto;
                 width: 100%;
-                height: auto;            /* 交給 flex */
-                flex: 1 1 auto;          /* 佔滿可用高度 */
+                height: auto;
+                flex: 1 1 auto;
                 border-radius: 0;
                 box-shadow: none;
                 z-index: auto;
@@ -321,15 +508,57 @@
             }
 
             .chat-warning {
-                position: static;        /* 取消 fixed */
+                position: static;
                 width: 100%;
-                margin-top: 0;           /* Remove margin for mobile */
+                margin-top: 0;
                 padding: 8px 12px;
-                background: transparent; /* 要底色可自行加 */
+                background: transparent;
                 z-index: auto;
                 pointer-events: auto;
                 text-align: center;
             }
+
+            /* FAQ Mobile Styles */
+            .faq-lightbox {
+                width: 100vw;
+                height: 100vh;
+                padding: 20px;
+            }
+
+            .faq-content {
+                max-width: 95%;
+                max-height: 85vh;
+                margin: 10px auto;
+            }
+
+            .faq-header {
+                padding: 20px 20px 16px;
+            }
+
+            .faq-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .faq-body {
+                padding: 20px;
+            }
+
+            .faq-item {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+                padding: 16px 0;
+            }
+
+            .copy-btn {
+                align-self: flex-end;
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+
+            .info-btn {
+                min-width: 120px; 
+            }   
         }
 
         /* Tablet adjustments */
@@ -344,7 +573,6 @@
             }
         }
 
-        /* Ensure flowise chatbot takes full space */
         flowise-fullchatbot {
             display: block;
             width: 100%;
@@ -359,7 +587,6 @@
         <button class="info-btn" id="infoBtn" aria-label="Know more about me">
             Know more about me
         </button>
-          
 
         <!-- Mobile overlay -->
         <div class="mobile-overlay" id="overlay"></div>
@@ -371,12 +598,16 @@
                 <br>Whether you're a recruiter, hiring manager, or just curious, feel free to explore my professional experiences.
             </p>
             
+            <a href="#" class="faq-link" id="faqLink">
+               Frequently Asked Questions
+            </a>
+
             <div class="about-card">
                 <div class="about-section">
                     <h2>About Me</h2>
                     <div class="profile">
                         <div class="profile-image">
-                          <img src="https://i.ibb.co/pv48bpdR/profile-mini.png" alt="Astrid Lin">
+                          <img src="images/profile-mini.png" alt="Astrid Lin">
                         </div>
                         <div class="profile-info">
                           <h3>Astrid Lin</h3>
@@ -384,11 +615,12 @@
                         </div>
                       </div>                      
                     <p class="bio">
-                        I’m a product manager passionate about AI and technology, with 5 years of experience driving innovative projects and shaping strategic product solutions.
+                        I'm a product manager passionate about AI and technology, with 5 years of experience driving innovative projects and shaping strategic product solutions.
                     </p>
                     <a href="https://www.linkedin.com/in/astrid-lin-profile/" target="_blank" class="linkedin-link">
                         Check my LinkedIn
                     </a>
+                    <br>
                 </div>
             </div>
         </div>
@@ -415,29 +647,184 @@
         </div>
     </div>
 
+    <!-- FAQ Lightbox -->
+    <div class="faq-lightbox" id="faqLightbox">
+        <div class="faq-content">
+            <div class="faq-header">
+                <h2>Frequently Asked Questions</h2>
+                <button class="faq-close" id="faqClose" aria-label="Close FAQ">&times;</button>
+            </div>
+            <div class="faq-body" id="faqBody">
+                <div class="faq-loading">
+                    <div class="spinner"></div>
+                    <span>Loading questions...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const infoBtn = document.getElementById('infoBtn');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
+        const faqLink = document.getElementById('faqLink');
+        const faqLightbox = document.getElementById('faqLightbox');
+        const faqClose = document.getElementById('faqClose');
+        const faqBody = document.getElementById('faqBody');
+        
+        // FAQ data cache
+        let faqData = null;
     
         function toggleMenu() {
             const isActive = sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
             
-            // 改變按鈕文字
             infoBtn.textContent = isActive ? 'Close' : 'Know more about me';
         }
     
         function closeMenu() {
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
-            infoBtn.textContent = 'Know more about me'; // 關閉時恢復
+            infoBtn.textContent = 'Know more about me';
+        }
+
+        // Load FAQ data from JSON
+        async function loadFAQData() {
+            try {
+                // JSON file path - update this to match your file name and location
+                const response = await fetch('faq_data.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error loading FAQ data:', error);
+                throw error;
+            }
+        }
+
+        // Render FAQ items
+        function renderFAQItems(questions) {
+            const faqItems = questions.map(question => `
+                <div class="faq-item">
+                    <div class="faq-question">${question}</div>
+                    <button class="copy-btn" data-copy="${question}">Copy</button>
+                </div>
+            `).join('');
+            
+            faqBody.innerHTML = faqItems;
+            
+            // Add event listeners to new copy buttons
+            faqBody.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const textToCopy = button.getAttribute('data-copy');
+                    copyText(textToCopy, button);
+                });
+            });
+        }
+
+        // Show error state
+        function showFAQError() {
+            faqBody.innerHTML = `
+                <div class="faq-error">
+                    <p>Sorry, couldn't load FAQ questions.</p>
+                    <button onclick="loadAndRenderFAQ()">Try Again</button>
+                </div>
+            `;
+        }
+
+        // Load and render FAQ
+        async function loadAndRenderFAQ() {
+            faqBody.innerHTML = `
+                <div class="faq-loading">
+                    <div class="spinner"></div>
+                    <span>Loading questions...</span>
+                </div>
+            `;
+            
+            try {
+                if (!faqData) {
+                    faqData = await loadFAQData();
+                }
+                renderFAQItems(faqData.questions);
+            } catch (error) {
+                showFAQError();
+            }
+        }
+
+        // FAQ Lightbox functionality
+        function openFAQ(e) {
+            e.preventDefault();
+            faqLightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Load FAQ data if not already loaded
+            if (!faqData) {
+                loadAndRenderFAQ();
+            }
+        }
+
+        function closeFAQ() {
+            faqLightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Copy functionality
+        function copyText(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
         }
     
+        // Event listeners
         infoBtn.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', closeMenu);
+        faqLink.addEventListener('click', openFAQ);
+        faqClose.addEventListener('click', closeFAQ);
+
+        // Close FAQ when clicking outside the content
+        faqLightbox.addEventListener('click', (e) => {
+            if (e.target === faqLightbox) {
+                closeFAQ();
+            }
+        });
+
+        // Close FAQ with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && faqLightbox.classList.contains('active')) {
+                closeFAQ();
+            }
+        });
     
-        const sidebarLinks = sidebar.querySelectorAll('a');
+        const sidebarLinks = sidebar.querySelectorAll('a:not(.faq-link)');
         sidebarLinks.forEach(link => {
             link.addEventListener('click', () => setTimeout(closeMenu, 300));
         });
@@ -450,7 +837,5 @@
             document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
         });
     </script>
-    
-
 </body>
 </html>

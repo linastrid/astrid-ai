@@ -42,27 +42,60 @@
             position: relative;
         }
 
-        /* Mobile CTA button - hidden on desktop */
-        .info-btn {
+        /* Mobile buttons - hidden on desktop */
+        .mobile-buttons {
             display: none;
             position: fixed;
             top: 12px;
-            right: 16px;
-            z-index: 1002;
+            left: 16px;
+            z-index: 10001;
+            gap: 8px;
+            pointer-events: auto;
+        }
+
+        .info-btn, .mobile-faq-btn {
             background: #fff;
             border: 1px solid #e5e5e5;
             border-radius: 8px;
             padding: 10px 14px;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
             font-size: 14px;
             font-weight: 600;
             color: #333;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 10002;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* åœ¨æ‰‹æ©Ÿä¸Šé¡¯ç¤º */
+        .mobile-faq-btn {
+            background: #667eea;
+            color: white;
+            border: 1px solid #667eea;
+        }
+
+        .mobile-faq-btn:hover,
+        .mobile-faq-btn:active {
+            background: #5a67d8;
+        }
+
+        .info-btn:hover,
+        .info-btn:active {
+            background: #f8f8f8;
+        }
+
+        /* Show mobile buttons only on mobile */
         @media (max-width: 768px) {
-            .info-btn { display: inline-flex; align-items: center; gap: 8px; }
+            .mobile-buttons { 
+                display: flex;
+                flex-direction: row;
+            }
         }
 
         /* Mobile overlay */
@@ -112,7 +145,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
+            /* margin-bottom: 30px; */
         }
 
         .about-section h2 {
@@ -126,7 +159,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .profile-image {
@@ -159,9 +192,9 @@
         .linkedin-link {
             display: inline-block;
             margin-top: 12px;
-            color: #3b81f6;
+            color: #2182F2;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
         }
 
@@ -173,9 +206,9 @@
         .faq-link {
             display: inline-block;
             margin-bottom: 32px;
-            color: #3b81f6;
-            font-size: 0.9rem;
-            font-weight: 500;
+            color: #2182F2;
+            font-size: 16px;
+            font-weight: 700;
             text-decoration: none;
             cursor: pointer;
             transition: color 0.2s ease;
@@ -193,7 +226,7 @@
             left: 0;
             width: 400px;
             height: 100vh;
-            z-index: 10000;
+            z-index: 20000;
             background: transparent;
             padding: 20px;
             box-sizing: border-box;
@@ -272,7 +305,7 @@
 
         .faq-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
             padding: 16px 0;
             border-bottom: 1px solid #f0f0f0;
@@ -362,6 +395,7 @@
             display: flex;
             flex-direction: column;
             height: calc(100vh - 40px);
+            /* background: white; */
         }
 
         .chatbot-wrapper {
@@ -444,9 +478,9 @@
                 height: 100vh;
                 transform: translateY(100%);
                 transition: transform 0.3s ease-in-out; 
-                z-index: 1000;
+                z-index: 9999;
                 background: #fafafa;
-                padding: 60px 30px 30px 30px;
+                padding: 72px 24px 24px 24px;
                 box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
             }
 
@@ -477,6 +511,10 @@
                 height: 60px;
             }
 
+            .faq-link {
+                display: none;
+            }
+
             .chat-area {
                 width: 100%;
                 height: 100dvh;
@@ -499,6 +537,7 @@
                 border-radius: 0;
                 box-shadow: none;
                 z-index: auto;
+                margin-top: 48px;
             }
 
             .chatbot-frame {
@@ -522,13 +561,15 @@
             .faq-lightbox {
                 width: 100vw;
                 height: 100vh;
-                padding: 20px;
+                padding: 12px;
             }
 
             .faq-content {
-                max-width: 95%;
-                max-height: 85vh;
-                margin: 10px auto;
+                /* max-width: 95%; */
+                /* max-height: 85vh; */
+                width: 100%;
+                height: 100%;
+                /* margin: 10px auto; */
             }
 
             .faq-header {
@@ -540,25 +581,30 @@
             }
 
             .faq-body {
-                padding: 20px;
+                padding: 8px 16px;
             }
 
             .faq-item {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
+                flex-direction: row;
+                gap: 12px;
+                align-items: center;
                 padding: 16px 0;
             }
 
             .copy-btn {
-                align-self: flex-end;
-                padding: 6px 10px;
-                font-size: 0.75rem;
+                /* align-self: flex-start; */
+                padding: 8px 12px;
+                font-size: 0.8rem;
             }
 
             .info-btn {
-                min-width: 120px; 
-            }   
+                min-width: 100px; 
+            }
+
+            .mobile-faq-btn {
+                min-width: 60px;
+            }
+
         }
 
         /* Tablet adjustments */
@@ -583,10 +629,15 @@
 </head>
 <body>
     <div class="container">
-        <!-- button (mobile only) -->
-        <button class="info-btn" id="infoBtn" aria-label="Know more about me">
-            Know more about me
-        </button>
+        <!-- Mobile buttons (mobile only) -->
+        <div class="mobile-buttons">
+            <button class="info-btn" id="infoBtn" aria-label="About Me">
+                About Me
+            </button>
+            <button class="mobile-faq-btn" id="mobileFaqBtn" aria-label="FAQ">
+                👉 Frequently Asked Questions
+            </button>
+        </div>
 
         <!-- Mobile overlay -->
         <div class="mobile-overlay" id="overlay"></div>
@@ -599,7 +650,7 @@
             </p>
             
             <a href="#" class="faq-link" id="faqLink">
-               Frequently Asked Questions
+               👉 Frequently Asked Questions
             </a>
 
             <div class="about-card">
@@ -615,7 +666,7 @@
                         </div>
                       </div>                      
                     <p class="bio">
-                        I'm a product manager passionate about AI and technology, with 5 years of experience driving innovative projects and shaping strategic product solutions.
+                        I'm a product manager passionate about AI and technology, with 5+ years of experience driving innovative projects.
                     </p>
                     <a href="https://www.linkedin.com/in/astrid-lin-profile/" target="_blank" class="linkedin-link">
                         Check my LinkedIn
@@ -665,6 +716,7 @@
 
     <script>
         const infoBtn = document.getElementById('infoBtn');
+        const mobileFaqBtn = document.getElementById('mobileFaqBtn');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         const faqLink = document.getElementById('faqLink');
@@ -679,13 +731,13 @@
             const isActive = sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
             
-            infoBtn.textContent = isActive ? 'Close' : 'Know more about me';
+            infoBtn.textContent = isActive ? 'Close' : 'About Me';
         }
     
         function closeMenu() {
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
-            infoBtn.textContent = 'Know more about me';
+            infoBtn.textContent = 'About Me';
         }
 
         // Load FAQ data from JSON
@@ -805,7 +857,45 @@
         }
     
         // Event listeners
-        infoBtn.addEventListener('click', toggleMenu);
+        infoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Info button clicked');
+            toggleMenu();
+        });
+        
+        mobileFaqBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Mobile FAQ button clicked');
+            openFAQ(e);
+        });
+        
+        // Add touch event listeners for mobile
+        mobileFaqBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            console.log('Mobile FAQ touch start');
+        });
+        
+        mobileFaqBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Mobile FAQ touch end');
+            openFAQ(e);
+        });
+        
+        infoBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            console.log('Info button touch start');
+        });
+        
+        infoBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Info button touch end');
+            toggleMenu();
+        });
+        
         overlay.addEventListener('click', closeMenu);
         faqLink.addEventListener('click', openFAQ);
         faqClose.addEventListener('click', closeFAQ);
